@@ -20,7 +20,7 @@ void init_seed( unsigned int seed )
 /*
   'Xorshift' Random number generator from wikipedia
 */
-long random_integer( void )
+unsigned int random_integer( void )
 {
   unsigned int x = patmos_cet_test_suite_seed;
   x ^= x << 13;

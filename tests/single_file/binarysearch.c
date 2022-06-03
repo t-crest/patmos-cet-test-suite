@@ -36,13 +36,12 @@
   Case Timing Analysis by Sung-Soo Lim
 */
 #include <stdio.h>
+#include "rand.h"
 
 /*
   Forward declaration of functions
 */
 
-void binarysearch_initSeed( int );
-long binarysearch_randomInteger( void );
 void binarysearch_init( void );
 int binarysearch_return( void );
 int binarysearch_binary_search( int );
@@ -73,24 +72,11 @@ int binarysearch_search_value;
 */
 
 /*
-  binarysearch_initSeed initializes the seed used in the "random" number
-  generator.
+  Generates random integers between 0 and 8094
 */
-void binarysearch_initSeed( int seed )
-{
-  binarysearch_seed = seed;
+int binarysearch_randomInteger() {
+	return random_integer() % 8095;
 }
-
-
-/*
-  binarysearch_RandomInteger generates "random" integers between 0 and 8094.
-*/
-long binarysearch_randomInteger( void )
-{
-  binarysearch_seed = ( ( binarysearch_seed * 133 ) + 81 ) % 8095;
-  return ( binarysearch_seed );
-}
-
 
 void binarysearch_init( void )
 {
@@ -130,7 +116,7 @@ int binarysearch_binary_search( int x )
   _Pragma( "loopbound min 1 max 4" )
   while ( low <= up ) {
     mid = ( low + up ) >> 1;
-
+	
     if ( binarysearch_data[ mid ].key == x ) {
       /* Item found */
       up = low - 1;
@@ -162,8 +148,8 @@ int main( void )
 {
   int seed;
   scanf("%d", &seed);
+  init_seed(seed);
   
-  binarysearch_initSeed(seed);
   binarysearch_init();
   binarysearch_main();
 

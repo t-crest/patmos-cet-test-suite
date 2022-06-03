@@ -24,7 +24,16 @@ compiled = sys.argv[2]
 # Which function is the root single-path function
 sp_root = sys.argv[3]
 
-check_all = len(sys.argv) > 4 and sys.argv[4]=="true"
+if len(sys.argv) > 4:
+    if sys.argv[4]=="false":
+        check_all = False
+    elif sys.argv[4]=="true":
+        check_all = True
+    else:
+        print("Invalid 'check_all' argument. Should be 'true' or 'false' but was'", sys.argv[4], "'")
+        sys.exit(1)
+else:
+    check_all = True
 
 # Compile and test using the given compiler arguments.
 # if 'ensure_all' is true, checks that running the program with any seed executes successfully.
@@ -39,7 +48,7 @@ def compile_and_test(args, ensure_all):
     def run_and_time(seed, must_exec_correct):
         out = subprocess.run(["pasim", compiled, "--print-stats", sp_root],stderr=subprocess.PIPE,input=str(seed), encoding='ascii')
         if must_exec_correct and out.returncode != 0:
-            throw_error("Execution failed for '", compiled, "' using seed ", 0)
+            throw_error("Execution failed for '", compiled, "' using seed ", seed)
         
         cycles = re.findall('Cycles:\s*[0-9]+',out.stderr)
         
@@ -49,7 +58,6 @@ def compile_and_test(args, ensure_all):
             throw_error("Couldn't unambiguously find the cycles count using seed '", seed, "': ", out.stderr)
              
     compiler_args = source_to_test + " -o " + compiled + " -mllvm --mpatmos-singlepath=" + sp_root + " -mllvm --mpatmos-enable-cet " + args
-    #compiler_args = source_to_test + " -o " + compiled + " " + args
              
     # Compile
     if subprocess.run(["patmos-clang"] + compiler_args.split()).returncode != 0:
@@ -59,13 +67,13 @@ def compile_and_test(args, ensure_all):
     cycles = run_and_time(0, True)
     
     for i in range(0,10):
-        seed = random.randint(0, 2147483647) #32-bit int
+        seed = random.randint(1, 2147483647) #32-bit int
         next_cycles = run_and_time(seed, ensure_all)
         
         if next_cycles != cycles:
             throw_error("Unequal execution time seed '", seed, "'") 
 
-compile_and_test("-O2", False)
+compile_and_test("-O2", check_all)
 
 # Success
 sys.exit(0)
