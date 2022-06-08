@@ -1,5 +1,4 @@
-#ifndef _PATMOS_CET_TEST_SUITE_RAND_H_
-#define _PATMOS_CET_TEST_SUITE_RAND_H_
+#include "rand.h"
 
 unsigned int patmos_cet_test_suite_seed;
 
@@ -29,5 +28,3 @@ unsigned int random_integer( void )
   patmos_cet_test_suite_seed = x;
   return patmos_cet_test_suite_seed;
 }
-
-#endif

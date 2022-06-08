@@ -24,10 +24,8 @@ config.test_format = lit.formats.ShTest(True)
 # by individual lit.local.cfg files in the test subdirectories.
 config.suffixes = ['.c']
 
-# excludes: A list of directories to exclude from the testsuite. The 'Inputs'
-# subdirectories contain auxiliary inputs for various tests in their parent
-# directories.
-config.excludes = ['Inputs', 'CMakeLists.txt', 'README.txt', 'LICENSE.txt']
+# excludes: A list of directories to exclude from the testsuite.
+config.excludes = ['lib']
 
 # test_source_root: The root path where tests are located.
 config.test_source_root = os.path.dirname(__file__)

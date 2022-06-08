@@ -14,23 +14,28 @@ if which("pasim") is None:
     sys.exit(1)
     
 # Parse arguments
-   
+
 # The source file to test
-source_to_test = sys.argv[1]
+source_to_test = ""
+
+sources_end = 1
+while(sys.argv[sources_end] != "__END_SOURCES__"):
+    source_to_test = source_to_test + " " + sys.argv[sources_end]
+    sources_end += 1
 
 # The compiled file
-compiled = sys.argv[2]   
+compiled = sys.argv[sources_end+1]   
 
 # Which function is the root single-path function
-sp_root = sys.argv[3]
+sp_root = sys.argv[sources_end+2]
 
-if len(sys.argv) > 4:
-    if sys.argv[4]=="false":
+if len(sys.argv) > sources_end+3:
+    if sys.argv[sources_end+3]=="false":
         check_all = False
-    elif sys.argv[4]=="true":
+    elif sys.argv[sources_end+3]=="true":
         check_all = True
     else:
-        print("Invalid 'check_all' argument. Should be 'true' or 'false' but was'", sys.argv[4], "'")
+        print("Invalid 'check_all' argument. Should be 'true' or 'false' but was'", sys.argv[sources_end+3], "'")
         sys.exit(1)
 else:
     check_all = True
@@ -57,7 +62,7 @@ def compile_and_test(args, ensure_all):
         else:
             throw_error("Couldn't unambiguously find the cycles count using seed '", seed, "': ", out.stderr)
              
-    compiler_args = source_to_test + " -o " + compiled + " -mllvm --mpatmos-singlepath=" + sp_root + " -mllvm --mpatmos-enable-cet " + args
+    compiler_args = source_to_test + " " + os.path.dirname(__file__) + "/lib/rand.c -o " + compiled + " -mllvm --mpatmos-singlepath=" + sp_root + " -mllvm --mpatmos-enable-cet " + args + " -I" + os.path.dirname(__file__) + "/include"
              
     # Compile
     if subprocess.run(["patmos-clang"] + compiler_args.split()).returncode != 0:
