@@ -113,14 +113,13 @@ void _Pragma( "entrypoint" ) insertsort_main()
 
   _Pragma( "loopbound min 9 max 9" )
   while ( i <= 10 ) {
-
     insertsort_iters_i++;
 
     j = i;
 
     insertsort_iters_a = 0;
 
-    _Pragma( "loopbound min 1 max 9" )
+    _Pragma( "loopbound min 0 max 10" )
     while ( insertsort_a[ j ] < insertsort_a[ j - 1 ] ) {
       insertsort_iters_a++;
 	  
