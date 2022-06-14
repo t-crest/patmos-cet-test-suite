@@ -104,7 +104,7 @@
 
 void jfdctint_init(int);
 int jfdctint_return();
-void jfdctint_main() __attribute__((noinline));
+void jfdctint_main();
 int main( void );
 
 

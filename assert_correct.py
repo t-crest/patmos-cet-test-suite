@@ -62,7 +62,7 @@ def compile_and_test(args, ensure_all):
         else:
             throw_error("Couldn't unambiguously find the cycles count using seed '", seed, "': ", out.stderr)
              
-    compiler_args = source_to_test + " " + os.path.dirname(__file__) + "/lib/rand.c -o " + compiled + " -mllvm --mpatmos-singlepath=" + sp_root + " -mllvm --mpatmos-enable-cet " + args + " -I" + os.path.dirname(__file__) + "/include"
+    compiler_args = source_to_test + " " + os.path.dirname(__file__) + "/lib/rand.c -o " + compiled + " -mpatmos-enable-cet -mpatmos-cet-functions=" + sp_root + " " + args + " -I" + os.path.dirname(__file__) + "/include"
              
     # Compile
     if subprocess.run(["patmos-clang"] + compiler_args.split()).returncode != 0:
@@ -79,6 +79,9 @@ def compile_and_test(args, ensure_all):
             throw_error("Unequal execution time seed '", seed, "'") 
 
 compile_and_test("-O2", check_all)
+compile_and_test("-O2 -mllvm --mpatmos-disable-pseudo-roots", check_all)
+compile_and_test("-O2 -mllvm --mpatmos-enable-cet=opposite", check_all)
+compile_and_test("-O2 -mllvm --mpatmos-enable-cet=counter", check_all)
 
 # Success
 sys.exit(0)

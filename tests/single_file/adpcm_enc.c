@@ -59,7 +59,7 @@ int adpcm_enc_cos( int n );
 int adpcm_enc_sin( int n );
 int adpcm_enc_abs( int n );
 void adpcm_enc_init( int );
-void adpcm_enc_main( void ) __attribute__((noinline));
+void adpcm_enc_main( void ) ;
 int adpcm_enc_return( void );
 int main( void );
 

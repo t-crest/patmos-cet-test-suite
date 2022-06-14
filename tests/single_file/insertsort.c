@@ -41,7 +41,7 @@
 void insertsort_initialize( unsigned int *array );
 void insertsort_init( void );
 int insertsort_return( void );
-void insertsort_main( void ) __attribute__((noinline));
+void insertsort_main( void ) ;
 int main( void );
 
 /*

@@ -57,7 +57,7 @@ int adpcm_dec_sin( int n );
 
 void adpcm_dec_init( int );
 int adpcm_dec_return();
-void adpcm_dec_main() __attribute__((noinline));
+void adpcm_dec_main();
 int main( void );
 
 

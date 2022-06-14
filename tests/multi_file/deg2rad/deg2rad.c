@@ -33,7 +33,7 @@
 */
 
 void deg2rad_init( int );
-void deg2rad_main( void ) __attribute__((noinline));
+void deg2rad_main( void ) ;
 int deg2rad_return( void );
 int main( void );
 

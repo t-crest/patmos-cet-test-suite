@@ -111,7 +111,7 @@ void gsm_dec_Coefficients_27_39( word *LARpp_j_1, word *LARpp_j, word *LARp );
 
 gsm gsm_dec_create( int );
 void gsm_dec_init( int );
-void gsm_dec_main( void ) __attribute__((noinline));
+void gsm_dec_main( void ) ;
 int main( void );
 
 /* add.c */
