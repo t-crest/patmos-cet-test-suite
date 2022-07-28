@@ -82,6 +82,7 @@ compile_and_test("-O2", check_all)
 compile_and_test("-O2 -mllvm --mpatmos-disable-pseudo-roots", check_all)
 compile_and_test("-O2 -mllvm --mpatmos-enable-cet=opposite", check_all)
 compile_and_test("-O2 -mllvm --mpatmos-enable-cet=counter", check_all)
+compile_and_test("-O2 -mllvm --mpatmos-enable-cet=counter -mllvm --mpatmos-disable-pseudo-roots", check_all)
 
 # Success
 sys.exit(0)
