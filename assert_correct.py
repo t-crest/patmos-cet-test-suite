@@ -54,7 +54,12 @@ def throw_error(args, *msgs):
         found_error=True
 
 def run_and_time(seed, must_exec_correct, args):
-        out = subprocess.run(["pasim", compiled, "-V"],stderr=subprocess.PIPE,input=str(seed), encoding='ascii')
+        try:
+            out = subprocess.run(["pasim", compiled, "-V"],stderr=subprocess.PIPE,input=str(seed), encoding='ascii', timeout=120)
+        except subprocess.TimeoutExpired:
+            throw_error(args, "Timeout for '", compiled, "' using seed ", seed)
+            return
+            
         if must_exec_correct and out.returncode != 0:
             throw_error(args, "Execution failed for '", compiled, "' using seed ", seed)
             return
@@ -63,7 +68,7 @@ def run_and_time(seed, must_exec_correct, args):
         matches = re.search(sp_root_cycles_regex, out.stderr)
         
         if matches == None:
-            throw_error(args, "Couldn't find cycle count.")
+            throw_error(args, "Couldn't find cycle count using seed '", seed, "':\n" + out.stderr)
             return 0
         else:
             return int(matches.group(1))
@@ -90,7 +95,7 @@ def compile_and_test(args, ensure_all):
         exit_code=123
         return
     
-    for i in range(0,10):
+    for i in range(0,20):
         seed = random.randint(1, 2147483647) #32-bit int
         next_cycles = run_and_time(seed, ensure_all, args)
         

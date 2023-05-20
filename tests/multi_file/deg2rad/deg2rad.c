@@ -51,8 +51,8 @@ float deg2rad_X, deg2rad_Y;
 
 void deg2rad_init( int seed )
 {
-  deg2rad_X = seed==0? 0 : random_integer();
-  deg2rad_Y = seed==0? 0 : random_integer();
+  deg2rad_X = random_or(seed,0);
+  deg2rad_Y = random_or(seed,0);
 }
 
 
