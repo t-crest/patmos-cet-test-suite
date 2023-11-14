@@ -111,6 +111,7 @@ def compile_and_test(comp_args, sim_args, ensure_all):
             exit_code=123
             return
 
+compile_and_test("-mllvm --mpatmos-enable-cet=opposite -mllvm --mpatmos-disable-singlepath-scheduler-equivalence-class", "", check_all)
 compile_and_test("-mllvm --mpatmos-enable-cet=opposite", "", check_all)
 compile_and_test("-mllvm --mpatmos-enable-cet=counter", "", check_all)
 compile_and_test("", "", check_all)
@@ -120,9 +121,9 @@ compile_and_test("-mllvm --mpatmos-disable-pseudo-roots", "", check_all)
 compile_and_test("-mllvm --mpatmos-enable-cet=opposite -mllvm --mpatmos-disable-vliw=false", "", check_all)
 compile_and_test("-mllvm --mpatmos-enable-cet=counter -mllvm --mpatmos-disable-vliw=false", "", check_all)
 compile_and_test("-mllvm --mpatmos-disable-vliw=false", "", check_all)
-compile_and_test("-mllvm --mpatmos-enable-cet=opposite -mllvm --mpatmos-disable-vliw=false -mllvm --mpatmos-disable-permissive-dual-issue=false", "--permissive-dual-issue", check_all)
-compile_and_test("-mllvm --mpatmos-enable-cet=counter -mllvm --mpatmos-disable-vliw=false -mllvm --mpatmos-disable-permissive-dual-issue=false", "--permissive-dual-issue", check_all)
-compile_and_test("-mllvm --mpatmos-disable-vliw=false -mllvm --mpatmos-disable-permissive-dual-issue=false", "--permissive-dual-issue", check_all)
+compile_and_test("-mllvm --mpatmos-enable-cet=opposite -mllvm --mpatmos-disable-vliw=false -mllvm --mpatmos-enable-permissive-dual-issue", "--permissive-dual-issue", check_all)
+compile_and_test("-mllvm --mpatmos-enable-cet=counter -mllvm --mpatmos-disable-vliw=false -mllvm --mpatmos-enable-permissive-dual-issue", "--permissive-dual-issue", check_all)
+compile_and_test("-mllvm --mpatmos-disable-vliw=false -mllvm --mpatmos-enable-permissive-dual-issue", "--permissive-dual-issue", check_all)
 
 # Success?
 sys.exit(exit_code)
