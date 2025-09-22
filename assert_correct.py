@@ -64,7 +64,7 @@ def run_and_time(seed, must_exec_correct, comp_args, sim_args):
             throw_error(comp_args, sim_args, "Execution failed for '", compiled, "' using seed ", seed)
             return
         
-        sp_root_cycles_regex = "<" + sp_root + ">\n.*\n\s*1\s*(\d*)"
+        sp_root_cycles_regex = "<" + sp_root + r">\n.*\n\s*1\s*(\d*)"
         matches = re.search(sp_root_cycles_regex, out.stderr)
         
         if matches == None:
